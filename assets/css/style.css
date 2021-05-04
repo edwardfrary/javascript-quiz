@@ -1,0 +1,28 @@
+body {
+    background-color: darkgrey;
+}
+
+header {
+    margin:0;
+}
+
+header h1 {
+    text-align: center;
+}
+
+main {
+    background-color:darkcyan;
+    width: 75%;
+    margin-left: 12.5%;
+}
+
+.btn-input {
+    display: flex;
+    justify-content:center;
+}
+
+#submit-answer {
+    width: 200px;
+    border-radius: 5px;
+    font-size:large;
+}
