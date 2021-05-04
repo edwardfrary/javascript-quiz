@@ -16,6 +16,10 @@ main {
     margin-left: 12.5%;
 }
 
+.questions {
+    text-align:center;
+}
+
 .btn-input {
     display: flex;
     justify-content:center;

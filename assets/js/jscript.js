@@ -1,3 +1,4 @@
+var questionsCounter = 0;
 var questions = [];
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
@@ -18,4 +19,12 @@ var questionsObj2 = {
 questions.push(questionsObj1);
 questions.push(questionsObj2);
 
+function createQuestion(){
+var headerObj = questions[questionsCounter].header;
+var questionHeaderEl = document.createElement("h2");
+questionHeaderEl.textContent = headerObj;
+questionHeader.appendChild(questionHeaderEl);
+}
+
 console.log(questions);
+createQuestion();
