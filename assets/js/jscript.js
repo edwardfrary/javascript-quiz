@@ -22,6 +22,9 @@ var questionsObj2 = {
 questions.push(questionsObj1);
 questions.push(questionsObj2);
 
+var x = questions[2].length;
+console.log(x);
+
 function createQuestion() {
 
     // Here we create the header for the specific question
