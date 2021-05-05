@@ -3,6 +3,7 @@ var displayCounter = questionsCounter + 1;
 var answerHolder = 0;
 var pointsTotal = 0;
 var questions = [];
+var spanCounter = document.getElementById("question-number");
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
 
@@ -26,7 +27,9 @@ questions.push(questionsObj1);
 questions.push(questionsObj2);
 
 function createQuestion() {
-    
+    //update the question number on the static header
+    spanCounter.innerHTML = displayCounter;
+
     // Here we create the header for the specific question
     var headerObj = questions[questionsCounter].header;
     var questionHeaderEl = document.createElement("h2");
@@ -113,6 +116,7 @@ function submitAnswer() {
         alert("Correct!");
         pointsTotal = pointsTotal + 3;
         questionsCounter++;
+        displayCounter++;
         removeElements();
         createQuestion();
     }
