@@ -9,6 +9,8 @@ var questions = [];
 var spanCounter = document.getElementById("question-number");
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
+var submitButton = document.getElementById("submit-answer");
+var buttonInput = document.getElementById("btn-container");
 
 //enter questions here following this format. Unfortunately all questions must have 3 answers and 
 //only 1 of which can be correct but there is no limit to the number of questions you can add.
@@ -119,6 +121,8 @@ function endQuiz() {
         playerScoreListEl.appendChild(playerScoreEl);
     }
 
+    submitButton.remove();
+    buttonInput.innerHTML = "<input type = 'button' id = 'retake-button' onclick='location.reload()' />";
     
 }
 
