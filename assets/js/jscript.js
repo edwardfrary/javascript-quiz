@@ -58,7 +58,6 @@ function createPlayer() {
 //decrements the timer by 1 every second   
 function quizTimer() {
     quizTimeCounter = quizTimeCounter - 1;
-    console.log(quizTimeCounter);
     if (quizTimeCounter <= 0) {
         endQuiz();
     }
@@ -133,12 +132,14 @@ function endQuiz() {
         time: quizTimeCounter
     }
 
-
-    playthroughCounter = localStorage.getItem(playthroughCounter);
     
-    if (playthroughCounter === undefined || playthroughCounter === "" || playthroughCounter === null) {
+    playthroughCounter = localStorage.getItem("playthroughCounter");
+    parseInt(playthroughCounter);
+
+    if (playthroughCounter === undefined || playthroughCounter === null) {
         playthroughCounter = 1;
     }
+    console.log(playthroughCounter);
 
     localStorage.setItem(playthroughCounter, JSON.stringify(scoreSubmit));
 
@@ -156,6 +157,7 @@ function endQuiz() {
     }
 
     playthroughCounter++;
+    console.log("playthroughCounter: " + playthroughCounter);
     localStorage.setItem("playthroughCounter", playthroughCounter);
 
     //remove the answer button and replace it with a button to retake the quiz
