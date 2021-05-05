@@ -4,7 +4,7 @@ var answerHolder = 0;
 var pointsTotal = 0;
 var playerName = "";
 var scoreStorage = [];
-var playthroughCounter = 0;
+var playthroughCounter = 1;
 var quizTimeCounter = 30;
 var t = 0;
 var questions = [];
@@ -50,9 +50,6 @@ function createPlayer() {
 
     else {
 
-        playthroughCounter = localStorage.getItem("playthroughCounter", playthroughCounter);
-        playthroughCounter++;
-        localStorage.setItem("playthroughCounter", playthroughCounter);
         t = setInterval(quizTimer, 1000);
         createQuestion();
     }
@@ -127,7 +124,6 @@ function createQuestion() {
 function endQuiz() {
 
     //stop the timer
-    removeElements();
     clearInterval(t);
 
     //create an object to be saved in local storage
@@ -137,11 +133,19 @@ function endQuiz() {
         time: quizTimeCounter
     }
 
-    localStorage.setItem(playthroughCounter - 1, JSON.stringify(scoreSubmit));
+
+    playthroughCounter = localStorage.getItem(playthroughCounter);
+    
+    if (playthroughCounter === undefined || playthroughCounter === "" || playthroughCounter === null) {
+        playthroughCounter = 1;
+    }
+
+    localStorage.setItem(playthroughCounter, JSON.stringify(scoreSubmit));
+
     var playerScoreListEl = document.createElement("ol");
     questionHeader.appendChild(playerScoreListEl);
 
-    for (i = 0; i < playthroughCounter; i++) {
+    for (i = 1; i <= playthroughCounter; i++) {
         var playerScoreRet = JSON.parse(localStorage.getItem(i));
         var playerScoreEl = document.createElement("li");
         playerScoreEl.textContent = playerScoreRet.name + " scored " + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
@@ -149,13 +153,16 @@ function endQuiz() {
         playerScoreListEl.appendChild(playerScoreEl);
     }
 
-    //remove the answer button and replace it with a button to retake the quiz
+    playthroughCounter++;
+    localStorage.setItem("playthroughCounter", playthroughCounter);
 
+    //remove the answer button and replace it with a button to retake the quiz
     submitButton.remove();
     buttonInput.innerHTML = "<input type = 'button' id = 'retake-button' onclick='location.reload()' value = 'Retake Quiz' />";
 
 }
 
+//remove the questions for either the next set to be displayed or the highscore to be displayed
 function removeElements() {
 
     var removeElement = document.getElementById("question-header-element");
@@ -215,11 +222,9 @@ function submitAnswer() {
     else {
         alert("Incorrect!");
         pointsTotal = pointsTotal - 1;
-        //add a decrement to the timer when implimented here
+        //add a decrement to the timer when a wrong question is selected
         quizTimeCounter = quizTimeCounter - 5;
     }
-
-    console.log(pointsTotal);
 };
 
 createPlayer();

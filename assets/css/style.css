@@ -10,6 +10,10 @@ header h1 {
     text-align: center;
 }
 
+header h2 {
+    text-align:center;
+}
+
 main {
     background-color:darkcyan;
     width: 75%;
@@ -52,4 +56,9 @@ ul li {
     font-size:larger;
     background-color:darkgrey;
     box-shadow: 3px 3px 3px black;
+}
+
+main div ol li {
+    margin: 10px auto;
+    font-weight: bold;
 }
