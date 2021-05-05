@@ -1,19 +1,21 @@
-var questionsCounter = 0;
-var displayCounter = questionsCounter + 1;
-var answerHolder = 0;
-var pointsTotal = 0;
-var playerName = "";
-var scoreStorage = [];
-var playthroughCounter = 1;
-var quizTimeCounter = 30;
-var t = 0;
-var questions = [];
-var counterDivEl = document.getElementById("countdown-timer-container");
-var spanCounter = document.getElementById("question-number");
-var questionHeader = document.getElementById("question-header");
-var questionAnswer = document.getElementById("answer-choice");
-var submitButton = document.getElementById("submit-answer");
-var buttonInput = document.getElementById("btn-container");
+var
+    questionsCounter = 0,
+    displayCounter = questionsCounter + 1,
+    answerHolder = 0,
+    pointsTotal = 0,
+    playerName = "",
+    playerScore = [],
+    scoreStorage = [],
+    playthroughCounter = 0,
+    quizTimeCounter = 30,
+    t = 0,
+    questions = [],
+    counterDivEl = document.getElementById("countdown-timer-container"),
+    spanCounter = document.getElementById("question-number"),
+    questionHeader = document.getElementById("question-header"),
+    questionAnswer = document.getElementById("answer-choice"),
+    submitButton = document.getElementById("submit-answer"),
+    buttonInput = document.getElementById("btn-container");
 
 //enter questions here following this format. Unfortunately all questions must have 3 answers and 
 //only 1 of which can be correct but there is no limit to the number of questions you can add.
@@ -137,7 +139,7 @@ function endQuiz() {
     parseInt(playthroughCounter);
 
     if (playthroughCounter === undefined || playthroughCounter === null) {
-        playthroughCounter = 1;
+        playthroughCounter = 0;
     }
 
     //save the object in local storage under the integer key of the current playthroughCounter
@@ -147,15 +149,19 @@ function endQuiz() {
     var playerScoreListEl = document.createElement("ol");
     questionHeader.appendChild(playerScoreListEl);
 
-    for (i = 1; i <= playthroughCounter; i++) {
-        var playerScoreRet = JSON.parse(localStorage.getItem(i));
-        console.log(playerScoreRet);
+    for (i = 0; i <= playthroughCounter; i++) {
+        scoreStorage[i] = JSON.parse(localStorage.getItem(i));
+    }
 
+    for (i = 0; i < scoreStorage.length; i++) {
+        console.log(scoreStorage[i]);
         var playerScoreEl = document.createElement("li");
-        playerScoreEl.textContent = playerScoreRet.name + " scored " + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
-
+        playerScoreEl.textContent = scoreStorage[i].name + " scored " + scoreStorage[i].score + " points with " + scoreStorage[i].time + " seconds to spare!";
         playerScoreListEl.appendChild(playerScoreEl);
     }
+
+
+    console.log(scoreStorage);
 
     //increment and save playthroughCounter to be recalled for next run
     playthroughCounter++;
