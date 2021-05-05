@@ -34,7 +34,7 @@ main {
     font-size:large;
 }
 
-li {
+ul li {
     list-style:none;
     margin: 10px auto;
     width: 25em;

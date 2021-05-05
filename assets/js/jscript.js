@@ -2,10 +2,16 @@ var questionsCounter = 0;
 var displayCounter = questionsCounter + 1;
 var answerHolder = 0;
 var pointsTotal = 0;
+var playerName = ""; 
+var scoreStorage = [];
+var playthroughCounter = 0;
 var questions = [];
 var spanCounter = document.getElementById("question-number");
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
+
+//enter questions here following this format. Unfortunately all questions must have 3 answers and 
+//only 1 of which can be correct but there is no limit to the number of questions you can add.
 
 var questionsObj1 = {
     header: "How do you declare a variable?",
@@ -23,8 +29,28 @@ var questionsObj2 = {
     correctAnswer: "a2"
 };
 
+//make sure to push the question into the array after it has been added.
+
 questions.push(questionsObj1);
 questions.push(questionsObj2);
+
+//player enters their name here, empty or null names will trigger the prompt again.
+
+function createPlayer() {
+    playerName = prompt("Enter your name and hit ok to start the quiz. Good luck!");
+    if (playerName === "" || playerName === null) {
+        
+        createPlayer()
+    }
+
+    else {
+
+        playthroughCounter = localStorage.getItem("playthroughCounter", playthroughCounter);
+        playthroughCounter++;
+        localStorage.setItem("playthroughCounter", playthroughCounter);
+        createQuestion();
+    }
+}
 
 function createQuestion() {
     //update the question number on the static header
@@ -71,6 +97,30 @@ function createQuestion() {
         questionAnswer.appendChild(answerLiEl);
     }
 };
+
+//function to save the playerName and score to the leaderboard
+
+function endQuiz() {
+
+    var scoreSubmit = {
+        name: playerName,
+        score: pointsTotal
+    }
+
+    localStorage.setItem(playthroughCounter-1, JSON.stringify(scoreSubmit));
+    var playerScoreListEl = document.createElement("ol");
+    questionHeader.appendChild(playerScoreListEl);
+
+    for (i = 0; i < playthroughCounter; i++) {
+        var playerScoreRet = JSON.parse(localStorage.getItem(i));
+        var playerScoreEl = document.createElement("li");
+        playerScoreEl.textContent = playerScoreRet.name + " with " + playerScoreRet.score + " points!";
+
+        playerScoreListEl.appendChild(playerScoreEl);
+    }
+
+    
+}
 
 function removeElements() {
 
@@ -137,4 +187,4 @@ function submitAnswer() {
     console.log(pointsTotal);
 };
 
-createQuestion();
+createPlayer();
