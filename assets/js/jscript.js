@@ -2,13 +2,13 @@ var questionsCounter = 0;
 var displayCounter = questionsCounter + 1;
 var answerHolder = 0;
 var pointsTotal = 0;
-var playerName = ""; 
+var playerName = "";
 var scoreStorage = [];
 var playthroughCounter = 0;
 var quizTimeCounter = 30;
 var t = 0;
 var questions = [];
-var counterDivEl = document.getElementById("countdown-timer");
+var counterDivEl = document.getElementById("countdown-timer-container");
 var spanCounter = document.getElementById("question-number");
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
@@ -44,7 +44,7 @@ questions.push(questionsObj2);
 function createPlayer() {
     playerName = prompt("Enter your name and hit ok to start the quiz. Good luck!");
     if (playerName === "" || playerName === null) {
-        
+
         createPlayer()
     }
 
@@ -54,23 +54,25 @@ function createPlayer() {
         playthroughCounter++;
         localStorage.setItem("playthroughCounter", playthroughCounter);
         t = setInterval(quizTimer, 1000);
-          createQuestion();
+        createQuestion();
     }
 }
 
 //decrements the timer by 1 every second   
-  function quizTimer(){
+function quizTimer() {
     quizTimeCounter = quizTimeCounter - 1;
     console.log(quizTimeCounter);
-    if (quizTimeCounter <= 0){
+    if (quizTimeCounter <= 0) {
         endQuiz();
     }
 
-    counterDivEl.remove();
-    counterDivEl.innerHTML = "<h3>You have " + quizTimeCounter + " seconds left! </h3>";
-    
-  
-  };
+    var counterEl = document.getElementById("countdown-timer")
+    counterEl.innerHTML = "You have " + quizTimeCounter + " seconds left!";
+
+    counterDivEl.appendChild(counterEl);
+
+
+};
 
 
 //creates the questions
@@ -124,24 +126,25 @@ function createQuestion() {
 
 function endQuiz() {
 
-        //stop the timer
-        clearInterval(t);
+    //stop the timer
+    removeElements();
+    clearInterval(t);
 
-        //create an object to be saved in local storage
+    //create an object to be saved in local storage
     var scoreSubmit = {
         name: playerName,
         score: pointsTotal,
         time: quizTimeCounter
     }
 
-    localStorage.setItem(playthroughCounter-1, JSON.stringify(scoreSubmit));
+    localStorage.setItem(playthroughCounter - 1, JSON.stringify(scoreSubmit));
     var playerScoreListEl = document.createElement("ol");
     questionHeader.appendChild(playerScoreListEl);
 
     for (i = 0; i < playthroughCounter; i++) {
         var playerScoreRet = JSON.parse(localStorage.getItem(i));
         var playerScoreEl = document.createElement("li");
-        playerScoreEl.textContent = playerScoreRet.name + "scored "  + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
+        playerScoreEl.textContent = playerScoreRet.name + " scored " + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
 
         playerScoreListEl.appendChild(playerScoreEl);
     }
@@ -150,7 +153,7 @@ function endQuiz() {
 
     submitButton.remove();
     buttonInput.innerHTML = "<input type = 'button' id = 'retake-button' onclick='location.reload()' value = 'Retake Quiz' />";
-    
+
 }
 
 function removeElements() {
