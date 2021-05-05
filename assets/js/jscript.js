@@ -152,16 +152,17 @@ function endQuiz() {
     for (i = 0; i <= playthroughCounter; i++) {
         scoreStorage[i] = JSON.parse(localStorage.getItem(i));
     }
+    
+    //sort the scores by high score
+    scoreStorage.sort((a, b) => b.score - a.score);
 
+    //display the scores on a created li element
     for (i = 0; i < scoreStorage.length; i++) {
         console.log(scoreStorage[i]);
         var playerScoreEl = document.createElement("li");
         playerScoreEl.textContent = scoreStorage[i].name + " scored " + scoreStorage[i].score + " points with " + scoreStorage[i].time + " seconds to spare!";
         playerScoreListEl.appendChild(playerScoreEl);
     }
-
-
-    console.log(scoreStorage);
 
     //increment and save playthroughCounter to be recalled for next run
     playthroughCounter++;
