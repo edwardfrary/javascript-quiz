@@ -28,48 +28,55 @@ questions.push(questionsObj2);
 
 function createQuestion() {
     //update the question number on the static header
-    spanCounter.innerHTML = displayCounter;
+    if (questions[questionsCounter] === undefined) {
+        endQuiz();
+    }
+    else {
 
-    // Here we create the header for the specific question
-    var headerObj = questions[questionsCounter].header;
-    var questionHeaderEl = document.createElement("h2");
-    questionHeaderEl.id = "question-header-element";
-    questionHeaderEl.textContent = headerObj;
-    questionHeader.appendChild(questionHeaderEl);
+        spanCounter.innerHTML = displayCounter;
 
-    //Here we create the answer list with checkbox inputs
-    var answerText = questions[questionsCounter].a1;
+        // Here we create the header for the specific question
+        var headerObj = questions[questionsCounter].header;
+        var questionHeaderEl = document.createElement("h2");
+        questionHeaderEl.id = "question-header-element";
+        questionHeaderEl.textContent = headerObj;
+        questionHeader.appendChild(questionHeaderEl);
 
-    var answerLiEl = document.createElement("li");
-    answerLiEl.id = "list-answer-one";
-    answerLiEl.innerHTML ="<input type = 'radio' name = 'answer-submission' id = 'answerOne' onclick = 'compareAnswersOne()' /><label for = 'answerOne'>" + answerText + "</label>";
 
-    questionAnswer.appendChild(answerLiEl);
+        //Here we create the answer list with checkbox inputs
+        var answerText = questions[questionsCounter].a1;
 
-    //Answer #2
-    var answerText = questions[questionsCounter].a2;
+        var answerLiEl = document.createElement("li");
+        answerLiEl.id = "list-answer-one";
+        answerLiEl.innerHTML = "<input type = 'radio' name = 'answer-submission' id = 'answerOne' onclick = 'compareAnswersOne()' /><label for = 'answerOne'>" + answerText + "</label>";
 
-    var answerLiEl = document.createElement("li");
-    answerLiEl.id="list-answer-two";
-    answerLiEl.innerHTML ="<input type = 'radio' name = 'answer-submission' id = 'answerTwo' onclick = 'compareAnswersTwo()' /><label for = 'answerTwo'>" + answerText + "</label>";
+        questionAnswer.appendChild(answerLiEl);
 
-    questionAnswer.appendChild(answerLiEl);
+        //Answer #2
+        var answerText = questions[questionsCounter].a2;
 
-    //Answer #3
-    var answerText = questions[questionsCounter].a3;
+        var answerLiEl = document.createElement("li");
+        answerLiEl.id = "list-answer-two";
+        answerLiEl.innerHTML = "<input type = 'radio' name = 'answer-submission' id = 'answerTwo' onclick = 'compareAnswersTwo()' /><label for = 'answerTwo'>" + answerText + "</label>";
 
-    var answerLiEl = document.createElement("li");
-    answerLiEl.id = "list-answer-three";
-    answerLiEl.innerHTML ="<input type = 'radio' name = 'answer-submission' id = 'answerThree' onclick = 'compareAnswersThree()' /><label for = 'answerThree'>" + answerText + "</label>";
+        questionAnswer.appendChild(answerLiEl);
 
-    questionAnswer.appendChild(answerLiEl);
+        //Answer #3
+        var answerText = questions[questionsCounter].a3;
+
+        var answerLiEl = document.createElement("li");
+        answerLiEl.id = "list-answer-three";
+        answerLiEl.innerHTML = "<input type = 'radio' name = 'answer-submission' id = 'answerThree' onclick = 'compareAnswersThree()' /><label for = 'answerThree'>" + answerText + "</label>";
+
+        questionAnswer.appendChild(answerLiEl);
+    }
 };
 
-function removeElements(){
+function removeElements() {
 
     var removeElement = document.getElementById("question-header-element");
     removeElement.remove();
-    
+
     removeElement = document.getElementById("list-answer-one");
     removeElement.remove();
 
@@ -80,8 +87,8 @@ function removeElements(){
     removeElement.remove();
 }
 
-function compareAnswersOne(){
-    if (questions[questionsCounter].correctAnswer === "a1"){
+function compareAnswersOne() {
+    if (questions[questionsCounter].correctAnswer === "a1") {
         answerHolder = 1;
     }
 
@@ -90,8 +97,8 @@ function compareAnswersOne(){
     }
 }
 
-function compareAnswersTwo(){
-    if (questions[questionsCounter].correctAnswer === "a2"){
+function compareAnswersTwo() {
+    if (questions[questionsCounter].correctAnswer === "a2") {
         answerHolder = 1;
     }
 
@@ -100,8 +107,8 @@ function compareAnswersTwo(){
     }
 }
 
-function compareAnswersThree(){
-    if (questions[questionsCounter].correctAnswer === "a3"){
+function compareAnswersThree() {
+    if (questions[questionsCounter].correctAnswer === "a3") {
         answerHolder = 1;
     }
 
@@ -109,10 +116,10 @@ function compareAnswersThree(){
         answerHolder = 0;
     }
 }
-    
+
 
 function submitAnswer() {
-    if (answerHolder === 1){
+    if (answerHolder === 1) {
         alert("Correct!");
         pointsTotal = pointsTotal + 3;
         questionsCounter++;
