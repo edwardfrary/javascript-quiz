@@ -5,7 +5,10 @@ var pointsTotal = 0;
 var playerName = ""; 
 var scoreStorage = [];
 var playthroughCounter = 0;
+var quizTimeCounter = 30;
+var t = 0;
 var questions = [];
+var counterDivEl = document.getElementById("countdown-timer");
 var spanCounter = document.getElementById("question-number");
 var questionHeader = document.getElementById("question-header");
 var questionAnswer = document.getElementById("answer-choice");
@@ -50,10 +53,27 @@ function createPlayer() {
         playthroughCounter = localStorage.getItem("playthroughCounter", playthroughCounter);
         playthroughCounter++;
         localStorage.setItem("playthroughCounter", playthroughCounter);
-        createQuestion();
+        t = setInterval(quizTimer, 1000);
+          createQuestion();
     }
 }
 
+//decrements the timer by 1 every second   
+  function quizTimer(){
+    quizTimeCounter = quizTimeCounter - 1;
+    console.log(quizTimeCounter);
+    if (quizTimeCounter <= 0){
+        endQuiz();
+    }
+
+    counterDivEl.remove();
+    counterDivEl.innerHTML = "<h3>You have " + quizTimeCounter + " seconds left! </h3>";
+    
+  
+  };
+
+
+//creates the questions
 function createQuestion() {
     //update the question number on the static header
     if (questions[questionsCounter] === undefined) {
@@ -104,9 +124,14 @@ function createQuestion() {
 
 function endQuiz() {
 
+        //stop the timer
+        clearInterval(t);
+
+        //create an object to be saved in local storage
     var scoreSubmit = {
         name: playerName,
-        score: pointsTotal
+        score: pointsTotal,
+        time: quizTimeCounter
     }
 
     localStorage.setItem(playthroughCounter-1, JSON.stringify(scoreSubmit));
@@ -116,13 +141,15 @@ function endQuiz() {
     for (i = 0; i < playthroughCounter; i++) {
         var playerScoreRet = JSON.parse(localStorage.getItem(i));
         var playerScoreEl = document.createElement("li");
-        playerScoreEl.textContent = playerScoreRet.name + " with " + playerScoreRet.score + " points!";
+        playerScoreEl.textContent = playerScoreRet.name + "scored "  + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
 
         playerScoreListEl.appendChild(playerScoreEl);
     }
 
+    //remove the answer button and replace it with a button to retake the quiz
+
     submitButton.remove();
-    buttonInput.innerHTML = "<input type = 'button' id = 'retake-button' onclick='location.reload()' />";
+    buttonInput.innerHTML = "<input type = 'button' id = 'retake-button' onclick='location.reload()' value = 'Retake Quiz' />";
     
 }
 
@@ -186,6 +213,7 @@ function submitAnswer() {
         alert("Incorrect!");
         pointsTotal = pointsTotal - 1;
         //add a decrement to the timer when implimented here
+        quizTimeCounter = quizTimeCounter - 5;
     }
 
     console.log(pointsTotal);
