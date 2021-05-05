@@ -7,7 +7,7 @@ var
     playerScore = [],
     scoreStorage = [],
     playthroughCounter = 0,
-    quizTimeCounter = 30,
+    quizTimeCounter = 60,
     t = 0,
     questions = [],
     counterDivEl = document.getElementById("countdown-timer-container"),
@@ -22,24 +22,33 @@ var
 
 var questionsObj1 = {
     header: "How do you declare a variable?",
-    a1: "var 'variableName' = 'data'",
-    a2: "'data' = var 'variableName'",
-    a3: "variable = 'variableName', 'data'",
+    a1: "var 'variableName' = 'data';",
+    a2: "'data' = var 'variableName';",
+    a3: "variable = 'variableName', 'data';",
     correctAnswer: "a1"
 };
 
 var questionsObj2 = {
     header: "How do you assign an Element to a variable by it's Id?",
-    a1: "'ElementId' = 'variableName' = document.GetElementbyName",
-    a2: "var 'variableName' = document.getElementById('ElementId')",
-    a3: "var 'variableName' = document.getElementById('variableName')",
+    a1: "'ElementId' = 'variableName' = document.GetElementbyName;",
+    a2: "var 'variableName' = document.getElementById('ElementId');",
+    a3: "var 'variableName' = document.getElementById('variableName');",
     correctAnswer: "a2"
+};
+
+var questionsObj3 = {
+    header: "How do you create an Element?",
+    a1: "'ElementId' = 'variableName' = document.createElement;",
+    a2: "var 'variableName' = document.createElement('ElementId');",
+    a3: "var 'variableNameEl = document.createElement('Element');",
+    correctAnswer: "a3"
 };
 
 //make sure to push the question into the array after it has been added.
 
 questions.push(questionsObj1);
 questions.push(questionsObj2);
+questions.push(questionsObj3);
 
 //player enters their name here, empty or null names will trigger the prompt again.
 
@@ -59,8 +68,9 @@ function createPlayer() {
 
 //decrements the timer by 1 every second   
 function quizTimer() {
-    quizTimeCounter = quizTimeCounter - 1;
+    quizTimeCounter--;
     if (quizTimeCounter <= 0) {
+        removeElements();
         endQuiz();
     }
 
@@ -126,7 +136,7 @@ function endQuiz() {
 
     //stop the timer
     clearInterval(t);
-
+    
     //create an object to be saved in local storage
     var scoreSubmit = {
         name: playerName,

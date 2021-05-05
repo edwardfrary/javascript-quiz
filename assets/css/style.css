@@ -1,28 +1,34 @@
 body {
     background-color: darkgrey;
+    text-align:center;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header {
     margin:0;
 }
 
-header h1 {
-    text-align: center;
-}
-
-header h2 {
-    text-align:center;
-}
-
 main {
+    display: flex;
+    flex-direction:column;
+    align-items:center;
     background-color:darkcyan;
-    width: 75%;
-    min-height: 640px;
-    margin-left: 12.5%;
+    max-width: 1024px;
+    width: 100%;
+    border-style:solid;
+    box-shadow: 3px 3px 3px black;
 }
 
-.questions {
-    text-align:center;
+main div h2 {
+    color:white;
+    text-shadow: 3px 3px 3px black;
+    margin: 20px 0px;
+}
+
+main div ul {
+    justify-items: center;
 }
 
 .btn-input {
@@ -45,10 +51,14 @@ main {
     background-color:yellow;
 }
 
+
+
 ul li {
     list-style:none;
-    margin: 10px auto;
-    width: 25em;
+    text-align:start;
+    margin: 10px 0px;
+    padding:0px 5px;
+    width: 100%;
     border-style:solid;
     border-width:1px;
     border-radius: 10px;
@@ -56,6 +66,10 @@ ul li {
     font-size:larger;
     background-color:darkgrey;
     box-shadow: 3px 3px 3px black;
+}
+
+main div ol {
+    text-align:start;
 }
 
 main div ol li {
