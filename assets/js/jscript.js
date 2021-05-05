@@ -147,6 +147,8 @@ function endQuiz() {
 
     for (i = 1; i <= playthroughCounter; i++) {
         var playerScoreRet = JSON.parse(localStorage.getItem(i));
+        console.log(playerScoreRet);
+
         var playerScoreEl = document.createElement("li");
         playerScoreEl.textContent = playerScoreRet.name + " scored " + playerScoreRet.score + " points with " + playerScoreRet.time + " seconds to spare!";
 
