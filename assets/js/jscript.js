@@ -132,17 +132,18 @@ function endQuiz() {
         time: quizTimeCounter
     }
 
-    
+    //index the current playthrough using the integer value of playthroughCounter as a key then increment and save a new value of playthroughCounter
     playthroughCounter = localStorage.getItem("playthroughCounter");
     parseInt(playthroughCounter);
 
     if (playthroughCounter === undefined || playthroughCounter === null) {
         playthroughCounter = 1;
     }
-    console.log(playthroughCounter);
 
+    //save the object in local storage under the integer key of the current playthroughCounter
     localStorage.setItem(playthroughCounter, JSON.stringify(scoreSubmit));
 
+    //create the entry on the scoreboard
     var playerScoreListEl = document.createElement("ol");
     questionHeader.appendChild(playerScoreListEl);
 
@@ -156,8 +157,8 @@ function endQuiz() {
         playerScoreListEl.appendChild(playerScoreEl);
     }
 
+    //increment and save playthroughCounter to be recalled for next run
     playthroughCounter++;
-    console.log("playthroughCounter: " + playthroughCounter);
     localStorage.setItem("playthroughCounter", playthroughCounter);
 
     //remove the answer button and replace it with a button to retake the quiz
