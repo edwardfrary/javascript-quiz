@@ -1,2 +1,5 @@
 # javascript-quiz
  
+This website hosts a quiz written in and about javascript. First the player is prompted to enter their name, this will later be used to save their score. There are currently 3 questions, each is worth 3 points and a timer of 60 seconds in which to answer them in. Each question has 3 possible answers of which only 1 is correct. Each wrong answer deducts 1 point from the players score and 5 seconds from the total time. The quiz ends once all questions have been correctly answered OR the timer runs out. At this point the highscore table will be displayed. The high scores are arranged by player score in descending order with the player's name and completion time also saved. 
+
+Any number of additional questions can be added by following the template of the existing questions objects and pushing them into the questions array. High scores are persistant across playthroughs as they are saved in local storage but can be reset by deleting their keys. 
